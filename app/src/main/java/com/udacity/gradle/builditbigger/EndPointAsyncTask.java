@@ -82,6 +82,6 @@ public class EndPointAsyncTask  extends AsyncTask<Pair<Context, String>, Void, S
         }
     }
     public interface ResponseCallBack{
-        void onSuccess(String reuslt);
+        void onSuccess(String result);
     }
 }

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 /**
@@ -30,7 +31,8 @@ public class AsyncTaskTest implements EndPointAsyncTask.ResponseCallBack {
 
 
     @Override
-    public void onSuccess(String reuslt) {
-        assertNotNull(reuslt);
+    public void onSuccess(String result) {
+
+        assertEquals("This is totally a funny joke",result);
     }
 }
