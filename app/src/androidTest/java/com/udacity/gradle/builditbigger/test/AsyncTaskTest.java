@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.ExecutionException;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
@@ -17,22 +19,19 @@ import static junit.framework.Assert.assertNotNull;
  * Created by Biro on 8/6/2017.
  */
 @RunWith(AndroidJUnit4.class)
-public class AsyncTaskTest implements EndPointAsyncTask.ResponseCallBack {
+public class AsyncTaskTest {
 
 
     @Test
-    public void setup()  {
+    public void setup() throws ExecutionException, InterruptedException {
 
         EndPointAsyncTask endPointAsyncTask = new EndPointAsyncTask();
-        endPointAsyncTask.setResponseCallBack(this);
-        endPointAsyncTask.execute();
+
+        String joke = endPointAsyncTask.execute().get();
+        assertEquals("This is totally a funny joke",joke);
     }
 
 
 
-    @Override
-    public void onSuccess(String result) {
 
-        assertEquals("This is totally a funny joke",result);
-    }
 }

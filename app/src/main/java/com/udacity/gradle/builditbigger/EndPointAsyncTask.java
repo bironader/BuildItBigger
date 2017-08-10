@@ -21,20 +21,18 @@ import java.io.IOException;
  * Created by Biro on 8/1/2017.
  */
 
-public class EndPointAsyncTask  extends AsyncTask<Pair<Context, String>, Void, String> {
+public class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
     private ProgressDialog progressDialog;
 
-    public void setResponseCallBack(ResponseCallBack responseCallBack) {
-        this.responseCallBack = responseCallBack;
-    }
+//    public void setResponseCallBack(ResponseCallBack responseCallBack) {
+//        this.responseCallBack = responseCallBack;
+//    }
 
     public EndPointAsyncTask() {
 
     }
-
-    private ResponseCallBack responseCallBack;
 
     public EndPointAsyncTask(Context context) {
         this.context = context;
@@ -45,7 +43,7 @@ public class EndPointAsyncTask  extends AsyncTask<Pair<Context, String>, Void, S
     protected void onPreExecute() {
         super.onPreExecute();
 
-        if(progressDialog != null){
+        if (progressDialog != null) {
             progressDialog.setMessage("loading...");
             progressDialog.show();
         }
@@ -54,7 +52,7 @@ public class EndPointAsyncTask  extends AsyncTask<Pair<Context, String>, Void, S
     @SafeVarargs
     @Override
     protected final String doInBackground(Pair<Context, String>... params) {
-        if(myApiService == null) {  // Only do this once
+        if (myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     .setRootUrl("http://10.0.2.2:8080/_ah/api/");
@@ -62,7 +60,6 @@ public class EndPointAsyncTask  extends AsyncTask<Pair<Context, String>, Void, S
             myApiService = builder.build();
 
         }
-
 
 
         try {
@@ -74,14 +71,16 @@ public class EndPointAsyncTask  extends AsyncTask<Pair<Context, String>, Void, S
 
     @Override
     protected void onPostExecute(String result) {
-        if(responseCallBack!=null)
-            responseCallBack.onSuccess(result);
-        else {
+
+        if(context!=null)
+        {
             context.startActivity(new Intent(context, JokeActivity.class).putExtra("joke", result));
             progressDialog.dismiss();
         }
+
+
     }
-    public interface ResponseCallBack{
-        void onSuccess(String result);
-    }
+//    public interface ResponseCallBack{
+//        void onSuccess(String result);
+//    }
 }
